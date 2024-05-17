@@ -3,10 +3,13 @@ import { User, Lock } from "@element-plus/icons-vue";
 import { ref } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
+import { useTokenStore } from "@/stores/token.js";
 
 import { userRegisterService, userLoginService } from "@/api/user.js";
 
 const router = useRouter();
+
+const tokenStore = useTokenStore();
 
 // 控制注册与登录表单的显示， 默认显示注册
 const isRegister = ref(false);
@@ -101,6 +104,9 @@ const login = async () => {
         message: result.msg ? result.msg : "Login successful",
         type: "success",
     });
+
+    // Store token to pinia
+    tokenStore.setToken(result.data);
 
     // Redirect to index page
     router.push("/");
