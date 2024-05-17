@@ -14,12 +14,17 @@ import router from "@/router";
 // Pinia
 import { createPinia } from "pinia";
 
+// Pinia-persistedstate-plugin
+import { createPersistedState } from "pinia-persistedstate-plugin";
+
 const app = createApp(App);
 
 app.use(ElementPlus);
 app.use(router);
 
 const pinia = createPinia();
+const persist = createPersistedState();
+pinia.use(persist);
 app.use(pinia);
 
 app.mount("#app");
